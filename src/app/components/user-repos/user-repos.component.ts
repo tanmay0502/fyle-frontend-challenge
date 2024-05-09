@@ -29,6 +29,7 @@ export class UserReposComponent implements OnChanges {
 
     if (this.cache[this.currentPage][this.reposPerPage]) {
       this.repoData = this.cache[this.currentPage][this.reposPerPage];
+      this.loading = false; 
     } else {
       this.apiService.getRepos(this.userData.login, this.currentPage, this.reposPerPage).subscribe(data => {
         this.repoData = data;
