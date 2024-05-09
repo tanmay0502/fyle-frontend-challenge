@@ -37,7 +37,7 @@ export class UserReposComponent implements OnChanges {
       }, error => {
         this.errorMessage = 'Invalid user';  
       }).add(() => {
-        this.loading = true; 
+        this.loading = false; 
       });
     }
   }
