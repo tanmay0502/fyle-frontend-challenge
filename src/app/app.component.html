@@ -1,6 +1,10 @@
 <div class="flex-col">
     <app-search-user (userEvent)="userData=$event"></app-search-user>
-    <app-user-profile [userData]="userData"></app-user-profile>
-    <app-user-repos  [userData]="userData"></app-user-repos>
+    
+    <div class="bg-fyle-gradient">
+      <app-user-profile [userData]="userData"></app-user-profile>
+      <app-user-repos  [userData]="userData"></app-user-repos>
+    </div>
+
   </div>
   
