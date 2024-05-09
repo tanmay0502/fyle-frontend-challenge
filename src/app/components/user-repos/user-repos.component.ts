@@ -14,13 +14,15 @@ export class UserReposComponent implements OnChanges {
   reposPerPage: number = 10;
   totalPages!: number;
   cache: any = {};
-  
+  loading: boolean = false;
+
   constructor(
     private apiService: ApiService
   ) {
   }
 
   repos() {
+    this.loading = true; 
     if (!this.cache[this.currentPage]) {
       this.cache[this.currentPage] = {};
     }
@@ -34,6 +36,8 @@ export class UserReposComponent implements OnChanges {
         console.log("Repos: ",this.repoData);
       }, error => {
         this.errorMessage = 'Invalid user';  
+      }).add(() => {
+        this.loading = true; 
       });
     }
   }
@@ -63,6 +67,7 @@ export class UserReposComponent implements OnChanges {
     const selectElement = event.target as HTMLSelectElement;
     this.reposPerPage = Number(selectElement.value);
     this.totalPages = Math.ceil(this.userData.public_repos / this.reposPerPage);
+    this.currentPage = 1;
     this.repos();
   }
 

@@ -9,25 +9,27 @@ import { ApiService } from '../../services/api.service';
 export class SearchUserComponent {
   githubUsername: string;
   userData: any;
-  errorMessage: string = '';  
+  errorMessage: string = '';
+  loading: boolean = false;
   @Output() userEvent = new EventEmitter<any>();  
 
-  constructor(
-    private apiService: ApiService
-  ) {
-    this.githubUsername = 'tanmay0502';
+  constructor(private apiService: ApiService) {
+    this.githubUsername = '';
   }
 
-  ngOnInit() {
-    this.search()
-  }
   search() {
-    this.apiService.getUser(this.githubUsername).subscribe(data => {
-      this.userData = data;
-      this.errorMessage = '';
-      this.userEvent.emit(this.userData);  
-    }, error => {
-      this.errorMessage = 'User Not found';  
+    this.loading = true; 
+    this.apiService.getUser(this.githubUsername).subscribe(
+      data => {
+        this.userData = data;
+        this.errorMessage = '';
+        this.userEvent.emit(this.userData);
+      }, 
+      error => {
+        this.errorMessage = 'User Not found';
+      }
+    ).add(() => {
+      this.loading = false; 
     });
   }
 }
