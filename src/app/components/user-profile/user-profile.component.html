@@ -1,1 +1,6 @@
-<p>user-profile works!</p>
+<div *ngIf="userData">
+    <img [src]="userData.avatar_url" alt="User Avatar">
+    <h2>{{ userData.login }}</h2>
+    <p>{{ userData.bio }}</p>
+</div>
+  

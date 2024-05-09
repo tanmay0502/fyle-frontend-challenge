@@ -3,4 +3,8 @@
       <input [(ngModel)]="githubUsername" name="githubUsername" placeholder="Enter GitHub username">
       <button type="submit">Search</button>
     </form>
+    <div *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    
   </div>
