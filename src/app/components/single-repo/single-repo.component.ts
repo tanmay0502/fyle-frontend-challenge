@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-single-repo',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./single-repo.component.scss']
 })
 export class SingleRepoComponent {
+  @Input() repo: any;
 
+  constructor() { }
 }

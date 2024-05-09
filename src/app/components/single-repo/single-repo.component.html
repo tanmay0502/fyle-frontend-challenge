@@ -1,1 +1,4 @@
-<p>single-repo works!</p>
+<div *ngIf="repo">
+    <p>Name: {{ repo.name }}</p>
+    <p>URL: <a href="{{ repo.html_url }}">{{ repo.html_url }}</a></p>
+</div>

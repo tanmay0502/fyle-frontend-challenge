@@ -7,14 +7,12 @@
         <option value="50">50</option>
         <option value="100">100</option>
     </select>
-    
 </div>
 <div *ngIf="repoData">
-    <div *ngFor="let repo of repoData">
-        <p>Name: {{ repo.name }}</p>
-        <p>URL: <a href="{{ repo.html_url }}">{{ repo.html_url }}</a></p>
-    </div>
-    <button (click)="prevPage()">Previous</button>
+    <app-single-repo *ngFor="let repo of repoData" [repo]="repo"></app-single-repo>
+    <button [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
+    <button *ngIf="currentPage > 1" (click)="goToPage(currentPage - 1)">{{ currentPage - 1 }}</button>
     <span>{{ currentPage }}</span>
-    <button (click)="nextPage()">Next</button>
+    <button *ngIf="currentPage < totalPages" (click)="goToPage(currentPage + 1)">{{ currentPage + 1 }}</button>
+    <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
 </div>

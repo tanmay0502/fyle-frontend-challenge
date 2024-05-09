@@ -12,6 +12,7 @@ export class UserReposComponent implements OnChanges {
   errorMessage: string = '';  
   currentPage: number = 1;
   reposPerPage: number = 10;
+  totalPages!: number;
   cache: any = {};
   
   constructor(
@@ -20,12 +21,16 @@ export class UserReposComponent implements OnChanges {
   }
 
   repos() {
-    if (this.cache[this.currentPage]) {
-      this.repoData = this.cache[this.currentPage];
+    if (!this.cache[this.currentPage]) {
+      this.cache[this.currentPage] = {};
+    }
+
+    if (this.cache[this.currentPage][this.reposPerPage]) {
+      this.repoData = this.cache[this.currentPage][this.reposPerPage];
     } else {
       this.apiService.getRepos(this.userData.login, this.currentPage, this.reposPerPage).subscribe(data => {
         this.repoData = data;
-        this.cache[this.currentPage] = data;
+        this.cache[this.currentPage][this.reposPerPage] = data;
         console.log("Repos: ",this.repoData);
       }, error => {
         this.errorMessage = 'Invalid user';  
@@ -35,13 +40,16 @@ export class UserReposComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.userData) {
+      this.totalPages = Math.ceil(this.userData.public_repos / this.reposPerPage);
       this.repos();
     }
   }
 
   nextPage() {
-    this.currentPage++;
-    this.repos();
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.repos();
+    }
   }
 
   prevPage() {
@@ -54,7 +62,12 @@ export class UserReposComponent implements OnChanges {
   changeReposPerPage(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     this.reposPerPage = Number(selectElement.value);
-    this.cache = {};
+    this.totalPages = Math.ceil(this.userData.public_repos / this.reposPerPage);
+    this.repos();
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
     this.repos();
   }
 }
