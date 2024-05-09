@@ -25,7 +25,7 @@ export class SearchUserComponent {
       this.userData = data;
       this.userEvent.emit(this.userData);  
     }, error => {
-      this.errorMessage = 'Invalid user';  
+      this.errorMessage = 'User Not found';  
     });
   }
 }

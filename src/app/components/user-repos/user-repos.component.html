@@ -1,5 +1,20 @@
 <div *ngIf="userData">
     <h2>User Repositories</h2>
     <p>{{ userData.public_repos }}</p>
+    <select (change)="changeReposPerPage($event)">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+    </select>
+    
 </div>
-  
+<div *ngIf="repoData">
+    <div *ngFor="let repo of repoData">
+        <p>Name: {{ repo.name }}</p>
+        <p>URL: <a href="{{ repo.html_url }}">{{ repo.html_url }}</a></p>
+    </div>
+    <button (click)="prevPage()">Previous</button>
+    <span>{{ currentPage }}</span>
+    <button (click)="nextPage()">Next</button>
+</div>
