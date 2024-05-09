@@ -15,14 +15,16 @@ export class SearchUserComponent {
   constructor(
     private apiService: ApiService
   ) {
-    this.githubUsername = '';
+    this.githubUsername = 'tanmay0502';
   }
 
   ngOnInit() {
+    this.search()
   }
   search() {
     this.apiService.getUser(this.githubUsername).subscribe(data => {
       this.userData = data;
+      this.errorMessage = '';
       this.userEvent.emit(this.userData);  
     }, error => {
       this.errorMessage = 'User Not found';  
